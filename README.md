@@ -100,11 +100,25 @@ While this gives a large degree of freedom, defining a "main" rating function is
         (if (and (empty? opponent-ratings)
                  (empty? opponent-devs)
                  (empty? outcomes))
-            (apply glicko2->glicko1 (inactive-update converted-rating converted-dev player-vol))
-            (apply glicko2->glicko1 ((partial glicko-rank tau) converted-rating converted-dev player-vol converted-opponent-ratings converted-opponent-devs outcomes)))))
+            (let [results (apply glicko2->glicko1 (inactive-update converted-rating converted-dev player-vol))]
+              {:player-rating (results 0)
+               :player-dev (ratings 1)
+               :player-vol (ratings 2)
+               :opponent-ratings []
+               :opponent-devs []
+               :outcomes []})
+            (let [results (apply glicko2->glicko1 ((partial glicko-rank tau) converted-rating converted-dev player-vol converted-opponent-ratings converted-opponent-devs outcomes))]
+              {:player-rating (results 0)
+                :player-dev (ratings 1)
+                :player-vol (ratings 2)
+                :opponent-ratings []
+                :opponent-devs []
+                :outcomes []})))
 
 (rate test-player)
 ```
+
+Note that all functions, if they return multiple values, return a vector of the form [player-rating player-dev player-vol]. This is to allow for easier destructuring and conversion; the shift back to map should happen at the end if needed.
 
 ## Example
 
@@ -144,8 +158,20 @@ The namespace that implements the main Glicko functionality is ```glickit.core``
         (if (and (empty? opponent-ratings)
                  (empty? opponent-devs)
                  (empty? outcomes))
-            (apply glicko2->glicko1 (inactive-update converted-rating converted-dev player-vol))
-            (apply glicko2->glicko1 ((partial glicko-rank tau) converted-rating converted-dev player-vol converted-opponent-ratings converted-opponent-devs outcomes)))))
+            (let [results (apply glicko2->glicko1 (inactive-update converted-rating converted-dev player-vol))]
+              {:player-rating (results 0)
+               :player-dev (ratings 1)
+               :player-vol (ratings 2)
+               :opponent-ratings []
+               :opponent-devs []
+               :outcomes []})
+            (let [results (apply glicko2->glicko1 ((partial glicko-rank tau) converted-rating converted-dev player-vol converted-opponent-ratings converted-opponent-devs outcomes))]
+              {:player-rating (results 0)
+                :player-dev (ratings 1)
+                :player-vol (ratings 2)
+                :opponent-ratings []
+                :opponent-devs []
+                :outcomes []}))))
 
 (rate test-player)
 ```
