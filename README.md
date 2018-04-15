@@ -184,7 +184,7 @@ This implementation is written in Clojure 1.9.0 for the JVM. I believe it should
 
 ## Other Implementations
 
-[This](https://github.com/ageneau/glicko2) is another implementation of the Glicko-2 system. If this library doesn't work for whatever reason, this may serve as a reasonable alternative. No insult is intended by making another Glicko-2 library; I only found it after mostly finishing this one.
+[This](https://github.com/ageneau/glicko2) is another implementation of the Glicko-2 system. If this library doesn't work for whatever reason, this may serve as a reasonable alternative. No insult is intended!
 
 ## Contact
 
