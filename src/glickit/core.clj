@@ -1,6 +1,5 @@
 (ns glickit.core
-  (:require [glickit.ranker :refer [vol-calc v E g]]
-            [glickit.helpers :refer :all]))
+  (:require [glickit.ranker :refer [vol-calc v E g]]))
 
 ;;; This namespace is an implementation of the Glicko-2 rating system, developed
 ;;; by Mark Glickman.

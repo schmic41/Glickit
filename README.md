@@ -69,7 +69,7 @@ While this gives a large degree of freedom, defining a "main" rating function is
 
 ```clojure
 
-(require '[glickit.core :refer [glicko-rank glicko2->glicko1 rating1->rating2 dev1->dev2]])
+(require '[glickit.core :refer [glicko-rank glicko2->glicko1 rating1->rating2 dev1->dev2 inactive-update]])
 
 ; Our test player, set up as a map. No games in a rating period are represented as empty vectors.
 (def test-player
@@ -95,25 +95,25 @@ While this gives a large degree of freedom, defining a "main" rating function is
         converted-dev (dev1->dev2 player-dev)
         converted-opponent-ratings (map #(rating1->rating2 %) opponent-ratings)
         converted-opponent-devs (map #(dev1->dev2 %) opponent-devs)]
-        ; This function is meant to be run every rating period.
-        ; If the player has been inactive, runs inactive-update.
-        (if (and (empty? opponent-ratings)
-                 (empty? opponent-devs)
-                 (empty? outcomes))
-            (let [results (apply glicko2->glicko1 (inactive-update converted-rating converted-dev player-vol))]
-              {:player-rating (results 0)
-               :player-dev (ratings 1)
-               :player-vol (ratings 2)
-               :opponent-ratings []
-               :opponent-devs []
-               :outcomes []})
-            (let [results (apply glicko2->glicko1 ((partial glicko-rank tau) converted-rating converted-dev player-vol converted-opponent-ratings converted-opponent-devs outcomes))]
-              {:player-rating (results 0)
-                :player-dev (ratings 1)
-                :player-vol (ratings 2)
-                :opponent-ratings []
-                :opponent-devs []
-                :outcomes []})))
+      ; This function is meant to be run every rating period.
+      ; If the player has been inactive, runs inactive-update.
+      (if (and (empty? opponent-ratings)
+               (empty? opponent-devs)
+               (empty? outcomes))
+        (let [[new-score new-dev new-vol] (apply glicko2->glicko1 (inactive-update converted-rating converted-dev player-vol))]
+          {:player-rating new-score
+            :player-dev new-dev
+            :player-vol new-vol
+            :opponent-ratings []
+            :opponent-devs []
+            :outcomes []})
+        (let [[new-score new-dev new-vol] (apply glicko2->glicko1 ((partial glicko-rank tau) converted-rating converted-dev player-vol converted-opponent-ratings converted-opponent-devs outcomes))]
+          {:player-rating new-score
+            :player-dev new-dev
+            :player-vol new-vol
+            :opponent-ratings []
+            :opponent-devs []
+            :outcomes []}))))
 
 (rate test-player)
 ```
@@ -127,7 +127,7 @@ We will walk through the example on [Mark Glickman's website](http://www.glicko.
 The namespace that implements the main Glicko functionality is ```glickit.core```. This contains the function ```glicko-rank``` as well as several helper functions that convert between the Glicko scales. For the internals of the Glicko system (g, v, delta, etc) see ```[glickit.ranker]```.
 
 ```clojure
-(require '[glickit.core :refer [glicko-rank glicko2->glicko1 rating1->rating2 dev1->dev2]])
+(require '[glickit.core :refer [glicko-rank glicko2->glicko1 rating1->rating2 dev1->dev2 inactive-update]])
 
 (def test-player
   {:player-rating 1500.0
@@ -153,25 +153,25 @@ The namespace that implements the main Glicko functionality is ```glickit.core``
         converted-dev (dev1->dev2 player-dev)
         converted-opponent-ratings (map #(rating1->rating2 %) opponent-ratings)
         converted-opponent-devs (map #(dev1->dev2 %) opponent-devs)]
-        ; This function is meant to be run every rating period.
-        ; If the player has been inactive, runs inactive-update.
-        (if (and (empty? opponent-ratings)
-                 (empty? opponent-devs)
-                 (empty? outcomes))
-            (let [results (apply glicko2->glicko1 (inactive-update converted-rating converted-dev player-vol))]
-              {:player-rating (results 0)
-               :player-dev (ratings 1)
-               :player-vol (ratings 2)
-               :opponent-ratings []
-               :opponent-devs []
-               :outcomes []})
-            (let [results (apply glicko2->glicko1 ((partial glicko-rank tau) converted-rating converted-dev player-vol converted-opponent-ratings converted-opponent-devs outcomes))]
-              {:player-rating (results 0)
-                :player-dev (ratings 1)
-                :player-vol (ratings 2)
-                :opponent-ratings []
-                :opponent-devs []
-                :outcomes []}))))
+      ; This function is meant to be run every rating period.
+      ; If the player has been inactive, runs inactive-update.
+      (if (and (empty? opponent-ratings)
+               (empty? opponent-devs)
+               (empty? outcomes))
+        (let [results (apply glicko2->glicko1 (inactive-update converted-rating converted-dev player-vol))]
+          {:player-rating (results 0)
+            :player-dev (results 1)
+            :player-vol (results 2)
+            :opponent-ratings []
+            :opponent-devs []
+            :outcomes []})
+        (let [results (apply glicko2->glicko1 ((partial glicko-rank tau) converted-rating converted-dev player-vol converted-opponent-ratings converted-opponent-devs outcomes))]
+          {:player-rating (results 0)
+            :player-dev (results 1)
+            :player-vol (results 2)
+            :opponent-ratings []
+            :opponent-devs []
+            :outcomes []}))))
 
 (rate test-player)
 ```
