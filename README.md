@@ -14,6 +14,10 @@ Glicko-2 is a rating system created by [Mark Glickman](http://www.glicko.net/). 
 
 With that in mind, let's get started!
 
+## Installation
+
+This has not yet been uploaded to Clojars. When it is, installation instructions will be provided here.
+
 ## Usage
 
 Some familiarity with ranking systems (what they are, what problems they solve, a general sense of how they work) is assumed.
