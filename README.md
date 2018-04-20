@@ -36,7 +36,7 @@ Converting back:
 * Rating-1 = (Rating-2 * 173.7178) + 1500
 * Deviation-1 = Deviation-2 * 173.7178
 
-These functions have been provided `[glickit.helpers]`.
+These functions have been provided in `[glickit.core]`.
 
 Glickman recommends the following values for new players (Glicko-1, Glicko-2):
 
