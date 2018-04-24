@@ -16,9 +16,9 @@ With that in mind, let's get started!
 
 ## Installation
 
-To install, add the following to your ```project.clj``` file:
+To install, add the following in your ```project.clj``` file:
 
-[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.schmic41/glickit.svg)](https://clojars.org/org.clojars.schmic41/glickit)
+```clojure [org.clojars.schmic41/glickit "1.0.0"]```
 
 ## Usage
 
