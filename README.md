@@ -18,7 +18,7 @@ With that in mind, let's get started!
 
 To install, add the following to your ```project.clj``` file:
 
-```[org.clojars.schmic41/glickit "1.0.0"]```
+[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.schmic41/glickit.svg)](https://clojars.org/org.clojars.schmic41/glickit)
 
 ## Usage
 
