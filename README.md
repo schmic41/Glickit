@@ -16,7 +16,9 @@ With that in mind, let's get started!
 
 ## Installation
 
-This has not yet been uploaded to Clojars. When it is, installation instructions will be provided here.
+To install, add the following to your ```project.clj``` file:
+
+```[org.clojars.schmic41/glickit "1.0.0"]```
 
 ## Usage
 
