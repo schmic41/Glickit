@@ -18,7 +18,7 @@ With that in mind, let's get started!
 
 To install, add the following in your ```project.clj``` file:
 
-```clojure [org.clojars.schmic41/glickit "1.0.0"]```
+```[org.clojars.schmic41/glickit "1.0.0"]```
 
 ## Usage
 
