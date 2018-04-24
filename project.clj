@@ -1,4 +1,4 @@
-(defproject glickit "1.0.0"
+(defproject org.clojars.schmic41/glickit "1.0.0"
   :description "A Glicko-2 implementation written in Clojure."
   :license {:name "MIT License"}
   :url "https://github.com/schmic41/Glickit"
